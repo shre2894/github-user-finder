@@ -3,14 +3,16 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 import Navbar from "./layout/Layout";
-import UserItem from "./users/UserItem";
+import Users from "./users/Users";
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
         <Navbar />
-        <UserItem />
+        <div className="container">
+          <Users />
+        </div>
       </div>
     );
   }
