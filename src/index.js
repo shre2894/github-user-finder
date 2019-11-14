@@ -13,13 +13,14 @@ class App extends React.Component {
 		users: []
 	};
 
-	async componentDidMount() {
+	// search user
+	searchUsers = async text => {
 		this.setState({ loading: true });
 		const res = await axios.get(
-			`https://api.github.com/users?client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+			`https://api.github.com/search/users?q=${text}&client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
 		);
-		this.setState({ users: res.data, loading: false });
-	}
+		this.setState({ users: res.data.items, loading: false });
+	};
 
 	render() {
 		const { loading, users } = this.state;
@@ -27,7 +28,7 @@ class App extends React.Component {
 			<div className="App">
 				<Navbar />
 				<div className="container">
-					<Search />
+					<Search searchUsers={this.searchUsers} />
 					<Users loading={loading} users={users} />
 				</div>
 			</div>
@@ -37,3 +38,13 @@ class App extends React.Component {
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
+
+/* // inital user (optional)
+	async componentDidMount() {
+		this.setState({ loading: true });
+		const res = await axios.get(
+			`https://api.github.com/users?client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+		);
+		this.setState({ users: res.data, loading: false });
+	}
+*/
